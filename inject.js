@@ -5,34 +5,25 @@ window.fetch = async (...args) => {
     const url = args[0];
     /* work with the cloned response in a separate promise
        chain -- could use the same chain with `await`. */
-    if (url.includes("/bet/api/bets")) {
+    if (String(url).includes("/bet/api/bets")) {
+        response
+            .clone()
+            .json()
+            .then(body => displayLimit(body))
+            .catch(err => console.log(err))
+            ;
     }
-    response
-        .clone()
-        .json()
-        .then(body => displayLimit(body))
-        .catch(err => console.log(err))
-        ;
-
-    /* the original response can be resolved unmodified: */
-
-
+    else {
+        response
+            .clone()
+            .json()
+            .then(body => console.log(body))
+            .catch(err => console.log(err))
+            ;
+    }
     return response;
-
-    /* or mock the response: */
-    // return {
-    //     ok: true,
-    //     status: 200,
-    //     json: async () => ({
-    //         userId: 1,
-    //         id: 1,
-    //         title: "Mocked!!",
-    //         completed: false
-    //     })
-    // };
 };
 
-// define displayLimit function
 function displayLimit(body) {
     // console.log(body);
     // Check if maxStake exists in the body array, and if so display it.

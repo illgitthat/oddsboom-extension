@@ -1,6 +1,6 @@
 {
   "name": "Oddsboom - Sportsbooks Tweaks",
-  "version": "1.0",
+  "version": "1.01",
   "manifest_version": 3,
   "description": "Automatically adjusts stake on Caesar's for limited accounts.",
   "web_accessible_resources": [{
