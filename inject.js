@@ -46,17 +46,26 @@ function displayLimit(body) {
                 // maxStake is in cents, so divide by 100 to get dollars.
                 const maxStake = formatter.format(err.details.maxStake / 100);
                 //console.log("Max stake is:", maxStake);
-                // Select the element with data-qa attribute of "betslip-message-alert-item-bet-errors-max-stake-exceeded"
-                // and replace the text with the max stake.
-                const maxStakeElement = document.querySelector('[data-qa="betslip-message-alert-item-bet-errors-max-stake-exceeded"]');
-                if (maxStakeElement) {
-                    maxStakeElement.innerHTML = `Stake exceeds this markets maximum. Max stake is ${maxStake}`;
-                }
                 const betslipElement = document.querySelector('[data-qa="betslip-input-field-desktop"]');
                 if (betslipElement) {
                     betslipElement.value = '';
                     betslipElement.focus();
                     document.execCommand('insertText', false, err.details.maxStake / 100); //execCommand is deprecated, but works for now.
+                }
+                // Look for div with class betslipFooterInfoRow and add a new div with the max stake.
+                const betslipFooterInfoRow = document.querySelector('.betslipFooterInfoRow');
+                if (betslipFooterInfoRow) {
+                    const footerContents = document.createElement('div');
+                    footerContents.classList.add('footerContents');
+                    const betslipMessages = document.createElement('div');
+                    betslipMessages.classList.add('betslipMessages');
+                    const message = document.createElement('span');
+                    message.classList.add('message');
+                    message.setAttribute('data-qa', 'betslip-message-alert-item-bet-errors-max-stake-exceeded');
+                    message.innerText = `Max stake is ${maxStake}. Your bet has been adjusted`;
+                    betslipMessages.appendChild(message);
+                    footerContents.appendChild(betslipMessages);
+                    betslipFooterInfoRow.appendChild(footerContents);
                 }
             }
         })
