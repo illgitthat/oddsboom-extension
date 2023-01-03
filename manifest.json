@@ -1,12 +1,18 @@
 {
   "name": "Oddsboom",
-  "description": "Boom",
-  "version": "1.0",
+  "version": "0.1",
   "manifest_version": 3,
-  "content_scripts": [
-    {
-        "matches": ["https://oddsboom.com/*", "https://www.oddsboom.com/*"],
-        "js": ["/content_script.js"]
-    }
-]
+  "description": "Boom",
+  "web_accessible_resources": [{
+    "resources": ["inject.js"],
+    "matches": ["https://*.williamhill.com/*"]
+}],
+"content_scripts": [{
+  "js": ["content_script.js"],
+  "run_at": "document_start",
+  "matches": ["https://*.williamhill.com/*"]
+}],
+  "permissions": [
+    "tabs"
+  ]
 }
