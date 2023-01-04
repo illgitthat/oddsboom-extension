@@ -5,7 +5,7 @@ window.fetch = async (...args) => {
     const url = args[0];
     /* work with the cloned response in a separate promise
        chain -- could use the same chain with `await`. */
-    if (String(url).includes("/bet/api/bets")) {
+    if (/^https:\/\/www\.williamhill\.com\/us\/.*\/bet\/api\/bets$/.test(String(url))) {
         response
             .clone()
             .json()
@@ -25,16 +25,34 @@ window.fetch = async (...args) => {
 };
 
 function displayLimit(body) {
-    // console.log(body);
-    // Check if maxStake exists in the body array, and if so display it.
-    if (body.errors) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+    // Check if bet was placed and maxBet exists in the body array, and if so display it.
+    if (body.bets && body.bets[0].maxBet) {
+        // Get max bet, subtract current bet, and divide by 100 to get the correct value.
+        const maxBet = formatter.format((body.bets[0].maxBet - body.bets[0].totalStake) / 100);
+        // Look for div with class betReceiptFooter and add a new div with the max bet at the top.
+        const betslipFooterInfoRow = document.querySelector('.betReceiptFooter');
+        if (betslipFooterInfoRow) {
+            const footerContents = document.createElement('div');
+            footerContents.classList.add('footerContents');
+            const betslipMessages = document.createElement('div');
+            betslipMessages.classList.add('betslipMessages');
+            const message = document.createElement('span');
+            message.classList.add('message');
+            message.setAttribute('data-qa', 'betslip-message-alert-item-bet-errors-max-bet-exceeded');
+            message.innerText = `Max bet remaining: ${maxBet}`;
+            betslipMessages.insertBefore(message, betslipMessages.firstChild);
+            footerContents.insertBefore(betslipMessages, footerContents.firstChild);
+            betslipFooterInfoRow.insertBefore(footerContents, betslipFooterInfoRow.firstChild);
+        }
+    }
+    // Check if bet was denied and maxStake exists in the body array, and if so display it.
+    else if (body.errors) {
         body.errors.forEach(err => {
             if (err.details && err.details.maxStake) {
-                const formatter = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                });
-                // maxStake is in cents, so divide by 100 to get dollars.
                 const maxStake = formatter.format(err.details.maxStake / 100);
                 //console.log("Max stake is:", maxStake);
                 const betslipElement = document.querySelector('[data-qa="betslip-input-field-desktop"]');

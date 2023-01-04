@@ -1,8 +1,8 @@
 {
   "name": "Oddsboom - Sportsbooks Tweaks",
-  "version": "1.01",
+  "version": "1.2",
   "manifest_version": 3,
-  "description": "Automatically adjusts stake on Caesar's for limited accounts.",
+  "description": "Automatically displays max bet on Caesar's for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
   "web_accessible_resources": [{
     "resources": ["inject.js"],
     "matches": ["https://*.williamhill.com/*"]
