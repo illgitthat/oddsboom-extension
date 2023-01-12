@@ -1,17 +1,38 @@
 {
   "name": "Oddsboom - Sportsbooks Tweaks",
-  "version": "1.2",
+  "version": "1.3",
   "manifest_version": 3,
-  "description": "Automatically displays max bet on Caesar's for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
-  "web_accessible_resources": [{
-    "resources": ["inject.js"],
-    "matches": ["https://*.williamhill.com/*"]
-}],
-"content_scripts": [{
-  "js": ["content_script.js"],
-  "run_at": "document_start",
-  "matches": ["https://*.williamhill.com/*"]
-}],
+  "description": "Automatically displays max bet on Caesars and Betway for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject_fetch.js"
+      ],
+      "matches": [
+        "https://*.williamhill.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "inject_xhr.js"
+      ],
+      "matches": [
+        "https://*.betway.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "content_script.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*.williamhill.com/*",
+        "https://*.betway.com/*"
+      ]
+    }
+  ],
   "permissions": [
     "tabs"
   ]
