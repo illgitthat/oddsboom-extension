@@ -4,7 +4,7 @@ name: "auto-release"
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   auto-release:
