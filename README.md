@@ -11,7 +11,7 @@ https://user-images.githubusercontent.com/2256474/214216833-120676a6-5f7c-47e0-a
 
 ## Installation
 
-- Download the repo as a ZIP file
+- [Download the repo as a ZIP file](https://github.com/illgitthat/oddsboom-extension/archive/refs/tags/latest.zip)
 - Unzip the file to a location of your choice
 - Go to chrome://extensions
 - Enable developer mode
