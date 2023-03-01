@@ -5,7 +5,7 @@ window.fetch = async (...args) => {
     const url = args[0];
     /* work with the cloned response in a separate promise
        chain -- could use the same chain with `await`. */
-    if (/^https:\/\/www\.williamhill\.com\/us\/.*\/bet\/api\/bets$/.test(String(url))) {
+    if (/^https:\/\/api\.americanwagering\.com\/regions\/.*\/brands\/czr\/sb\/bets$/.test(String(url))) {
         response
             .clone()
             .json()
