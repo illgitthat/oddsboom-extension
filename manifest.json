@@ -9,7 +9,8 @@
         "inject_fetch.js"
       ],
       "matches": [
-        "https://*.williamhill.com/*"
+        "https://*.williamhill.com/*",
+        "https://sportsbook.caesars.com/*"
       ]
     },
     {
@@ -29,6 +30,7 @@
       "run_at": "document_start",
       "matches": [
         "https://*.williamhill.com/*",
+        "https://sportsbook.caesars.com/*",
         "https://*.betway.com/*"
       ]
     }
