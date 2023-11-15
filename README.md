@@ -2,11 +2,11 @@
 
 This private extension makes a few tweaks to betting websites. Currently
 
-- Adjusts stake on Caesars for limited accounts.
+- Adjusts stake on Draftkings and Caesars for limited accounts
 - Notifies of max stake on Betway for limited bets (such as boosts)
 
 
-## Example:
+## Examples:
 https://user-images.githubusercontent.com/2256474/214216833-120676a6-5f7c-47e0-abf5-3dba241e2214.mp4
 
 ## Installation

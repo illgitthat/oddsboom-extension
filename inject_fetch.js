@@ -37,12 +37,10 @@ function DKdisplayLimit(body) {
         style: 'currency',
         currency: 'USD',
     });
-
     if (body.response && body.response.bets && body.response.bets[0].maxStake) {
-        const maxStake = formatter.format(body.response.bets[0].maxStake);
-
+        const numericMaxStake = body.response.bets[0].maxStake;
+        const maxStake = formatter.format(numericMaxStake);
         const betslipElement = document.querySelector('.sportsbook__betslip');
-
         // Only proceed if sportsbook__betslip already exists in the DOM
         if (betslipElement) {
             const observer = new MutationObserver(() => {
@@ -52,6 +50,28 @@ function DKdisplayLimit(body) {
                     maxStakeWarning.innerText = 'The maximum stake is ' + maxStake;
                     // Stop observing once the element is found
                     observer.disconnect();
+
+                    const actionRequiredButton = document.querySelector('.dk-action-required__button button');
+                    const betSelectionElements = document.querySelectorAll('.sportsbook-outcome-cell__body.selected');
+                    actionRequiredButton.click();
+                    betSelectionElements.forEach(betSelectionElement => betSelectionElement.click());
+
+                    const betslipStakeField = document.querySelector('.betslip-wager-box__input');
+                    const placeBetButton = document.querySelector('.dk-place-bet-button__container');
+                    if (betslipStakeField) {
+                        setTimeout(() => { // timeout needed otherwise the betslip isn't fully rendered yet
+                            betslipStakeField.focus();
+                            document.execCommand('insertText', false, numericMaxStake);
+                            // add a footer of <div class="dk-action-required__title" style="margin-top:10px">Max Stake Adjusted to $25.69</div> to the end of the dk-place-bet-button__container div
+                            const footerContents = document.createElement('div');
+                            footerContents.className = "dk-action-required__title";
+                            footerContents.style.marginTop = "10px";
+                            footerContents.innerHTML = "Max Stake Adjusted to " + maxStake;
+                            footerContents.style.textAlign = "center";
+                            footerContents.style.backgroundColor = "#fbd002";
+                            placeBetButton.appendChild(footerContents);
+                        }, 500);
+                    }
                 }
             });
             // Start observing betslipElement and its descendants
