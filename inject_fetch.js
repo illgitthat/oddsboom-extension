@@ -9,9 +9,17 @@ window.fetch = async (...args) => {
         response
             .clone()
             .json()
-            .then(body => displayLimit(body))
+            .then(body => CZRdisplayLimit(body))
             .catch(err => console.log(err))
             ;
+    }
+    // Check if url matches https://gaming-us-*.draftkings/com/api/wager/v1/placeBets
+    else if (/^https:\/\/gaming-us-\w+\.draftkings\.com\/api\/wager\/v1\/placeBets$/.test(String(url))) {
+        response
+            .clone()
+            .json()
+            .then(body => DKdisplayLimit(body))
+            .catch(err => console.log(err))
     }
     else {
         response
@@ -24,7 +32,38 @@ window.fetch = async (...args) => {
     return response;
 };
 
-function displayLimit(body) {
+function DKdisplayLimit(body) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+    if (body.response && body.response.bets && body.response.bets[0].maxStake) {
+        const maxStake = formatter.format(body.response.bets[0].maxStake);
+
+        const betslipElement = document.querySelector('.sportsbook__betslip');
+
+        // Only proceed if sportsbook__betslip already exists in the DOM
+        if (betslipElement) {
+            const observer = new MutationObserver(() => {
+                // Query for the maxStakeWarning element again in case it has been added to the DOM
+                const maxStakeWarning = betslipElement.querySelector('.dk-action-required__text');
+                if (maxStakeWarning) {
+                    maxStakeWarning.innerText = 'The maximum stake is ' + maxStake;
+                    // Stop observing once the element is found
+                    observer.disconnect();
+                }
+            });
+            // Start observing betslipElement and its descendants
+            observer.observe(betslipElement, {
+                childList: true, // observe direct children
+                subtree: true, // and lower descendants too
+            });
+        }
+    }
+}
+
+function CZRdisplayLimit(body) {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',

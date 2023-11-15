@@ -1,8 +1,8 @@
 {
   "name": "Oddsboom - Sportsbooks Tweaks",
-  "version": "1.5",
+  "version": "1.6",
   "manifest_version": 3,
-  "description": "Automatically displays max bet on Caesars and Betway for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
+  "description": "Automatically displays max bet on Draftkings, Caesars, and Betway for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
   "web_accessible_resources": [
     {
       "resources": [
@@ -10,7 +10,8 @@
       ],
       "matches": [
         "https://*.williamhill.com/*",
-        "https://sportsbook.caesars.com/*"
+        "https://sportsbook.caesars.com/*",
+        "https://sportsbook.draftkings.com/*"
       ]
     },
     {
@@ -31,7 +32,8 @@
       "matches": [
         "https://*.williamhill.com/*",
         "https://sportsbook.caesars.com/*",
-        "https://*.betway.com/*"
+        "https://*.betway.com/*",
+        "https://sportsbook.draftkings.com/*"
       ]
     }
   ],
