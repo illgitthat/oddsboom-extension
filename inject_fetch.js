@@ -94,7 +94,7 @@ function CZRdisplayLimit(body) {
             if (err.details && err.details.maxStake) {
                 const maxStake = formatter.format(err.details.maxStake / 100);
                 //console.log("Max stake is:", maxStake);
-                const betslipElement = document.querySelector('[data-qa="betslip-input-field-desktop"]');
+                const betslipElement = document.querySelector('input[data-qa="betslip-input-field-desktop"]');
                 if (betslipElement) {
                     betslipElement.value = '';
                     betslipElement.focus();
