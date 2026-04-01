@@ -12,7 +12,14 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
+      - uses: "actions/checkout@v4"
+
+      - name: "Get version from manifest"
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' manifest.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: "Build & test"
         run: |
           echo "done!"
@@ -22,6 +29,15 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "Latest Version"
+          title: "v${{ steps.version.outputs.version }}"
+          files: |
+            *
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "v${{ steps.version.outputs.version }}"
+          prerelease: false
+          title: "v${{ steps.version.outputs.version }}"
           files: |
             *
