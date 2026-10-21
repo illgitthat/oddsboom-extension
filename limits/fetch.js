@@ -1,33 +1,14 @@
+// Runs in the page (MAIN world) on DraftKings and Caesars: reads max-stake info from bet responses.
+(() => {
 const { fetch: origFetch } = window;
 window.fetch = async (...args) => {
-    //console.log("fetch called with args:", args);
     const response = await origFetch(...args);
-    const url = args[0];
-    /* work with the cloned response in a separate promise
-       chain -- could use the same chain with `await`. */
-    if (/^https:\/\/api\.americanwagering\.com\/regions\/.*\/brands\/czr\/sb\/(v\d+\/)?bets$/.test(String(url))) {
-        response
-            .clone()
-            .json()
-            .then(body => CZRdisplayLimit(body))
-            .catch(err => console.log(err))
-            ;
+    const url = String(args[0] instanceof Request ? args[0].url : args[0]);
+    if (/^https:\/\/api\.americanwagering\.com\/regions\/.*\/brands\/czr\/sb\/(v\d+\/)?bets$/.test(url)) {
+        response.clone().json().then(CZRdisplayLimit).catch(() => {});
     }
-    // Check if url matches https://gaming-us-*.draftkings/com/api/wager/v1/placeBets
-    else if (/^https:\/\/gaming-us-\w+\.draftkings\.com\/api\/wager\/v1\/placeBets$/.test(String(url))) {
-        response
-            .clone()
-            .json()
-            .then(body => DKdisplayLimit(body))
-            .catch(err => console.log(err))
-    }
-    else {
-        response
-            .clone()
-            .json()
-            .then(body => console.log(body))
-            .catch(err => console.log(err))
-            ;
+    else if (/^https:\/\/gaming-us-\w+\.draftkings\.com\/api\/wager\/v1\/placeBets$/.test(url)) {
+        response.clone().json().then(DKdisplayLimit).catch(() => {});
     }
     return response;
 };
@@ -119,3 +100,4 @@ function CZRdisplayLimit(body) {
         })
     }
 }
+})();

@@ -1,43 +1,52 @@
 {
-  "name": "Oddsboom - Sportsbooks Tweaks",
-  "version": "1.9.1",
   "manifest_version": 3,
-  "description": "Automatically displays max bet on Draftkings, Caesars, and Betway for limited accounts. Bet is auto adjusted in betslip (not submitted) if bet exceeds limit.",
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "inject_fetch.js"
-      ],
-      "matches": [
-        "https://*.williamhill.com/*",
-        "https://sportsbook.caesars.com/*",
-        "https://sportsbook.draftkings.com/*"
-      ]
-    },
-    {
-      "resources": [
-        "inject_xhr.js"
-      ],
-      "matches": [
-        "https://*.betway.com/*"
-      ]
-    }
-  ],
+  "name": "Oddsboom",
+  "version": "2.0.0",
+  "description": "See American or decimal odds (fees included) next to every price on Kalshi, Polymarket, ProphetX and Novig, plus max-stake limits on sportsbooks.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Oddsboom"
+  },
+  "permissions": ["storage"],
   "content_scripts": [
     {
-      "js": [
-        "content_script.js"
+      "matches": [
+        "https://kalshi.com/*",
+        "https://*.kalshi.com/*",
+        "https://polymarket.us/*",
+        "https://*.polymarket.us/*",
+        "https://polymarket.com/*",
+        "https://*.polymarket.com/*",
+        "https://prophetx.co/*",
+        "https://*.prophetx.co/*",
+        "https://novig.com/*",
+        "https://*.novig.com/*"
       ],
-      "run_at": "document_start",
+      "js": ["odds/core.js", "odds/content.js"],
+      "css": ["odds/odds.css"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": [
         "https://*.williamhill.com/*",
         "https://sportsbook.caesars.com/*",
-        "https://*.betway.com/*",
         "https://sportsbook.draftkings.com/*"
-      ]
+      ],
+      "js": ["limits/fetch.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://*.betway.com/*"],
+      "js": ["limits/xhr.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
     }
-  ],
-  "permissions": [
-    "tabs"
   ]
 }

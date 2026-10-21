@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="../icons/icon32.png" alt="" width="20" height="20" />
+      <h1>Oddsboom</h1>
+      <label class="switch" title="Turn odds on or off everywhere">
+        <input type="checkbox" id="enabled" />
+        <span></span>
+      </label>
+    </header>
+
+    <main id="main">
+      <section>
+        <h2>Show odds as</h2>
+        <div class="chips" role="group" aria-label="Odds formats">
+          <label><input type="checkbox" data-format="american" /><span>American</span></label>
+          <label><input type="checkbox" data-format="decimal" /><span>Decimal</span></label>
+          <label><input type="checkbox" data-format="implied" /><span>Implied %</span></label>
+        </div>
+        <p class="example" id="example"></p>
+      </section>
+
+      <section>
+        <h2>Fees</h2>
+        <div class="chips" role="radiogroup" aria-label="Fees">
+          <label><input type="radio" name="fees" value="taker" /><span>Taker</span></label>
+          <label><input type="radio" name="fees" value="maker" /><span>Maker</span></label>
+          <label><input type="radio" name="fees" value="off" /><span>Off</span></label>
+        </div>
+        <p class="example" id="fees-note"></p>
+      </section>
+
+      <section>
+        <h2>Sites</h2>
+        <div id="sites"></div>
+      </section>
+    </main>
+
+    <footer>Sportsbook max-stake limits run on DraftKings, Caesars and Betway.</footer>
+
+    <script src="../odds/core.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
