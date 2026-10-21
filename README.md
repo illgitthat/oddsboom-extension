@@ -4,12 +4,17 @@ A Chrome extension for people who bet on prediction markets and sportsbooks.
 
 - **Odds everywhere.** Shows American (or decimal, or implied %) odds next to every price on
   Kalshi, Polymarket US, ProphetX, Novig and Polymarket. Prices update live with the page.
-- **Fees included.** Optionally converts the price you actually pay: Kalshi 7% × p(1−p),
-  Polymarket US 6.95% × p(1−p), ProphetX 2% of winnings. Novig is free pregame.
+- **Fees included.** Pick taker, maker or no fees and the odds are what you actually get:
+  - Kalshi: taker 7% × p(1−p); maker 1.75% × p(1−p) only on series that charge makers
+    (looked up from Kalshi's API once a day per series).
+  - Polymarket US: taker 6.95% × p(1−p); makers free.
+  - ProphetX: 2% of winnings, taker or maker.
+  - Novig: free pregame and for makers; live takers pay 3% × p(1−p), 6% for MLB, NHL and CFB.
+    Whether a game is live comes from the event's status line on the page.
 - **Sportsbook limits.** Shows your max stake on DraftKings, Caesars and Betway, and on Caesars
   adjusts the betslip to it (never submits).
 
-Click the toolbar icon to pick formats, toggle fees, or turn sites on and off.
+Click the toolbar icon to pick formats and fees, or turn sites on and off.
 
 Only standalone prices get odds (`55%`, `62¢`, `Yes 41¢`). Text like `3.5% APY`, `(2%)`,
 `-5.92%` or `$0.21` is left alone.

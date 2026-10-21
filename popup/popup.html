@@ -26,13 +26,13 @@
       </section>
 
       <section>
-        <label class="row">
-          <span>
-            Include fees
-            <small>Odds you actually get after taker fees or commission</small>
-          </span>
-          <span class="switch"><input type="checkbox" id="fees" /><span></span></span>
-        </label>
+        <h2>Fees</h2>
+        <div class="chips" role="radiogroup" aria-label="Fees">
+          <label><input type="radio" name="fees" value="taker" /><span>Taker</span></label>
+          <label><input type="radio" name="fees" value="maker" /><span>Maker</span></label>
+          <label><input type="radio" name="fees" value="off" /><span>Off</span></label>
+        </div>
+        <p class="example" id="fees-note"></p>
       </section>
 
       <section>
