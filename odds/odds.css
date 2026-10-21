@@ -1,0 +1,37 @@
+[data-ob]::after {
+  content: attr(data-ob);
+  display: inline-block;
+  margin-left: 0.4em;
+  padding: 0.1em 0.35em;
+  border-radius: 0.35em;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: 0.82em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  vertical-align: baseline;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Tight fixed-width cells: stack the odds under the price. */
+[data-ob][data-ob-stack]::after,
+html[data-ob-site="polymarketus"] .w-12 [data-ob]::after {
+  display: block;
+  margin: 0.1em auto 0;
+  width: fit-content;
+  font-size: 0.72em;
+  padding: 0 0.3em;
+}
+
+/* Kalshi's Yes/No toggle slides a 50%-wide highlight, so keep both halves equal. */
+html[data-ob-site="kalshi"] div:has(> button [data-ob]) > button {
+  flex: 1 1 0;
+  padding-inline: 0.25rem;
+}
+html[data-ob-site="kalshi"] button [data-ob]::after {
+  margin-left: 0.3em;
+  padding: 0.05em 0.25em;
+}

@@ -1,3 +1,5 @@
+// Runs in the page (MAIN world) on Betway: shows the max bet when a wager is over the limit.
+(() => {
 
 const XHR = XMLHttpRequest.prototype
 
@@ -60,3 +62,4 @@ XHR.send = function () {
 
     return send.apply(this, arguments)
 }
+})();

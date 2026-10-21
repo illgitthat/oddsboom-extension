@@ -1,18 +1,24 @@
----
 name: "auto-release"
 
 on:
   push:
     branches:
       - "main"
+  pull_request:
+
+permissions:
+  contents: write
 
 jobs:
   auto-release:
-    name: "Auto Release"
+    name: "Test & release"
     runs-on: "ubuntu-latest"
 
     steps:
       - uses: "actions/checkout@v4"
+
+      - name: "Test"
+        run: node --test
 
       - name: "Get version from manifest"
         id: version
@@ -20,24 +26,25 @@ jobs:
           VERSION=$(jq -r '.version' manifest.json)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: "Build & test"
-        run: |
-          echo "done!"
+      - name: "Package extension"
+        run: zip -r oddsboom.zip manifest.json odds limits popup icons
 
       - uses: "marvinpinto/action-automatic-releases@latest"
+        if: github.event_name == 'push'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
           title: "v${{ steps.version.outputs.version }}"
           files: |
-            *
+            oddsboom.zip
 
       - uses: "marvinpinto/action-automatic-releases@latest"
+        if: github.event_name == 'push'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "v${{ steps.version.outputs.version }}"
           prerelease: false
           title: "v${{ steps.version.outputs.version }}"
           files: |
-            *
+            oddsboom.zip

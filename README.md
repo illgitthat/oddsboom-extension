@@ -1,19 +1,37 @@
-# Oddsboom - Sportsbooks Tweaks
+# Oddsboom
 
-This private extension makes a few tweaks to betting websites. Currently
+A Chrome extension for people who bet on prediction markets and sportsbooks.
 
-- Adjusts stake on Caesars for limited accounts
-- Notifies of max stake on Draftkings and Betway for limited bets
+- **Odds everywhere.** Shows American (or decimal, or implied %) odds next to every price on
+  Kalshi, Polymarket US, ProphetX, Novig and Polymarket. Prices update live with the page.
+- **Fees included.** Optionally converts the price you actually pay: Kalshi 7% × p(1−p),
+  Polymarket US 6.95% × p(1−p), ProphetX 2% of winnings. Novig is free pregame.
+- **Sportsbook limits.** Shows your max stake on DraftKings, Caesars and Betway, and on Caesars
+  adjusts the betslip to it (never submits).
 
-## Installation
+Click the toolbar icon to pick formats, toggle fees, or turn sites on and off.
 
-- [Download the repo as a ZIP file](https://github.com/illgitthat/oddsboom-extension/archive/refs/tags/latest.zip)
-- Unzip the file to a location of your choice
-- Go to chrome://extensions
-- Enable developer mode
-- Load unpacked and select the folder you extracted to install ![install](https://github.com/illgitthat/oddsboom-extension/assets/2256474/0782fe23-2ee9-4966-b7ec-549bf772ed32)
+Only standalone prices get odds (`55%`, `62¢`, `Yes 41¢`). Text like `3.5% APY`, `(2%)`,
+`-5.92%` or `$0.21` is left alone.
 
-## Examples:
+## Install
+
+1. [Download oddsboom.zip](https://github.com/illgitthat/oddsboom-extension/releases/download/latest/oddsboom.zip) and unzip it.
+2. Open `chrome://extensions` and turn on **Developer mode**.
+3. Click **Load unpacked** and pick the unzipped folder (the one with `manifest.json`).
+
+## Develop
+
+```sh
+node --test   # parsing and odds math
+```
+
+`odds/core.js` holds the parsing, conversions and fee models. `odds/content.js` tags each price's
+element with `data-ob`, and `odds/odds.css` draws the badge with `::after`, so no nodes are
+added to the page. `limits/` runs in the page to read the sportsbooks' bet responses.
+
+## Examples (sportsbook limits)
+
 https://github.com/illgitthat/oddsboom-extension/assets/2256474/6b718b39-1b65-461f-833d-c7f2353bada6
 
 https://github.com/illgitthat/oddsboom-extension/assets/2256474/65f42bb6-ab9a-460a-b531-377a5ce8dac4
